@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { rentals, documents } from "@/db/schema";
+import { SERVICE_TYPE_LABELS } from "@/lib/validation/rental";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DeleteConfirmButton } from "@/components/forms/delete-confirm-button";
@@ -67,6 +68,10 @@ export default async function RentalDetailPage({
         <div>
           <div className="text-muted-foreground">Rate</div>
           <div>${rental.rateAmount}</div>
+        </div>
+        <div>
+          <div className="text-muted-foreground">Vehicle use</div>
+          <div>{SERVICE_TYPE_LABELS[rental.serviceType]}</div>
         </div>
         <div>
           <div className="text-muted-foreground">Start date</div>

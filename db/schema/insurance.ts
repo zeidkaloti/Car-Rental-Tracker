@@ -1,29 +1,19 @@
-import {
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-  date,
-  pgEnum,
-  index,
-} from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid, date, index } from "drizzle-orm/pg-core";
 import { cars } from "./cars";
 import { user } from "./auth";
 import { documents } from "./documents";
 
-export const certResultEnum = pgEnum("cert_result", ["pass", "fail"]);
-
-export const safetyCertifications = pgTable(
-  "safety_certifications",
+export const insurancePolicies = pgTable(
+  "insurance_policies",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     carId: uuid("car_id")
       .notNull()
       .references(() => cars.id, { onDelete: "cascade" }),
-    certDate: date("cert_date").notNull(),
+    startDate: date("start_date").notNull(),
     expiryDate: date("expiry_date").notNull(),
-    inspector: text("inspector"),
-    result: certResultEnum("result").notNull(),
+    provider: text("provider"),
+    policyNumber: text("policy_number"),
     documentId: uuid("document_id").references(() => documents.id, {
       onDelete: "set null",
     }),
@@ -33,5 +23,5 @@ export const safetyCertifications = pgTable(
       onDelete: "set null",
     }),
   },
-  (table) => [index("safety_certs_car_expiry_idx").on(table.carId, table.expiryDate)],
+  (table) => [index("insurance_policies_car_expiry_idx").on(table.carId, table.expiryDate)],
 );

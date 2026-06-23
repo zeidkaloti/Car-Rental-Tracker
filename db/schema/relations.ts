@@ -3,7 +3,8 @@ import { renters } from "./renters";
 import { cars } from "./cars";
 import { rentals } from "./rentals";
 import { serviceRecords } from "./service-records";
-import { safetyCertifications } from "./safety-certifications";
+import { registrations } from "./registrations";
+import { insurancePolicies } from "./insurance";
 import { charges } from "./charges";
 import { invoices } from "./invoices";
 
@@ -16,7 +17,8 @@ export const rentersRelations = relations(renters, ({ many }) => ({
 export const carsRelations = relations(cars, ({ many }) => ({
   rentals: many(rentals),
   serviceRecords: many(serviceRecords),
-  safetyCertifications: many(safetyCertifications),
+  registrations: many(registrations),
+  insurancePolicies: many(insurancePolicies),
   charges: many(charges),
 }));
 
@@ -30,8 +32,12 @@ export const serviceRecordsRelations = relations(serviceRecords, ({ one }) => ({
   car: one(cars, { fields: [serviceRecords.carId], references: [cars.id] }),
 }));
 
-export const safetyCertificationsRelations = relations(safetyCertifications, ({ one }) => ({
-  car: one(cars, { fields: [safetyCertifications.carId], references: [cars.id] }),
+export const registrationsRelations = relations(registrations, ({ one }) => ({
+  car: one(cars, { fields: [registrations.carId], references: [cars.id] }),
+}));
+
+export const insurancePoliciesRelations = relations(insurancePolicies, ({ one }) => ({
+  car: one(cars, { fields: [insurancePolicies.carId], references: [cars.id] }),
 }));
 
 export const chargesRelations = relations(charges, ({ one }) => ({

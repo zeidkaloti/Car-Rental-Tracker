@@ -36,6 +36,7 @@ export default async function EditRentalPage({
           endDate: rental.endDate ?? undefined,
           billingCadence: rental.billingCadence,
           rateAmount: Number(rental.rateAmount),
+          serviceType: rental.serviceType,
           status: rental.status,
           notes: rental.notes ?? undefined,
         }}

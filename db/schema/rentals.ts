@@ -24,6 +24,16 @@ export const rentalStatusEnum = pgEnum("rental_status", [
   "cancelled",
 ]);
 
+export const rentalServiceTypeEnum = pgEnum("rental_service_type", [
+  "uber",
+  "uber_eats",
+  "lyft",
+  "doordash",
+  "instacart",
+  "personal",
+  "other",
+]);
+
 export const rentals = pgTable(
   "rentals",
   {
@@ -38,6 +48,7 @@ export const rentals = pgTable(
     endDate: date("end_date"),
     billingCadence: billingCadenceEnum("billing_cadence").notNull(),
     rateAmount: numeric("rate_amount", { precision: 10, scale: 2 }).notNull(),
+    serviceType: rentalServiceTypeEnum("service_type").notNull().default("other"),
     status: rentalStatusEnum("status").notNull().default("active"),
     notes: text("notes"),
     createdAt: timestamp("created_at").notNull().defaultNow(),

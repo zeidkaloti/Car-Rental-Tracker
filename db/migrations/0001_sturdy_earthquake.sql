@@ -1,0 +1,1 @@
+ALTER TABLE "cars" ADD COLUMN "service_interval_miles" integer DEFAULT 5000 NOT NULL;

@@ -31,6 +31,7 @@ export default async function EditCarPage({
           plate: car.plate,
           color: car.color ?? undefined,
           mileage: car.mileage,
+          serviceIntervalMiles: car.serviceIntervalMiles,
           status: car.status,
           notes: car.notes ?? undefined,
         }}

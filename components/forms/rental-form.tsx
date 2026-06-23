@@ -19,6 +19,8 @@ import {
   rentalInputSchema,
   BILLING_CADENCES,
   RENTAL_STATUSES,
+  RENTAL_SERVICE_TYPES,
+  SERVICE_TYPE_LABELS,
   type RentalInput,
   type RentalFormInput,
 } from "@/lib/validation/rental";
@@ -57,6 +59,7 @@ export function RentalForm({
       endDate: undefined,
       billingCadence: "monthly",
       rateAmount: 0,
+      serviceType: "other",
       status: "active",
       notes: "",
       ...defaultValues,
@@ -136,7 +139,7 @@ export function RentalForm({
             <FieldError errors={[form.formState.errors.endDate]} />
           </Field>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel htmlFor="billingCadence">Billing cadence</FieldLabel>
             <Controller
@@ -166,6 +169,33 @@ export function RentalForm({
             <FieldLabel htmlFor="rateAmount">Rate amount</FieldLabel>
             <Input id="rateAmount" type="number" step="0.01" {...form.register("rateAmount")} />
             <FieldError errors={[form.formState.errors.rateAmount]} />
+          </Field>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Field>
+            <FieldLabel htmlFor="serviceType">Vehicle use</FieldLabel>
+            <Controller
+              control={form.control}
+              name="serviceType"
+              render={({ field }) => (
+                <Select
+                  value={field.value ?? "other"}
+                  onValueChange={(value) => field.onChange(value)}
+                >
+                  <SelectTrigger id="serviceType" className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {RENTAL_SERVICE_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {SERVICE_TYPE_LABELS[type]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <FieldError errors={[form.formState.errors.serviceType]} />
           </Field>
           <Field>
             <FieldLabel htmlFor="status">Status</FieldLabel>

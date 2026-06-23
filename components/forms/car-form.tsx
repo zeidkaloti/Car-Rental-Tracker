@@ -48,6 +48,7 @@ export function CarForm({
       plate: "",
       color: "",
       mileage: 0,
+      serviceIntervalMiles: 5000,
       status: "available",
       notes: "",
       ...defaultValues,
@@ -110,31 +111,40 @@ export function CarForm({
             <FieldError errors={[form.formState.errors.mileage]} />
           </Field>
           <Field>
-            <FieldLabel htmlFor="status">Status</FieldLabel>
-            <Controller
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <Select
-                  value={field.value ?? "available"}
-                  onValueChange={(value) => field.onChange(value)}
-                >
-                  <SelectTrigger id="status" className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CAR_STATUSES.map((status) => (
-                      <SelectItem key={status} value={status}>
-                        {STATUS_LABELS[status]}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
+            <FieldLabel htmlFor="serviceIntervalMiles">Service interval (mi)</FieldLabel>
+            <Input
+              id="serviceIntervalMiles"
+              type="number"
+              {...form.register("serviceIntervalMiles")}
             />
-            <FieldError errors={[form.formState.errors.status]} />
+            <FieldError errors={[form.formState.errors.serviceIntervalMiles]} />
           </Field>
         </div>
+        <Field>
+          <FieldLabel htmlFor="status">Status</FieldLabel>
+          <Controller
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <Select
+                value={field.value ?? "available"}
+                onValueChange={(value) => field.onChange(value)}
+              >
+                <SelectTrigger id="status" className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {CAR_STATUSES.map((status) => (
+                    <SelectItem key={status} value={status}>
+                      {STATUS_LABELS[status]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          <FieldError errors={[form.formState.errors.status]} />
+        </Field>
         <Field>
           <FieldLabel htmlFor="notes">Notes</FieldLabel>
           <Textarea id="notes" rows={3} {...form.register("notes")} />

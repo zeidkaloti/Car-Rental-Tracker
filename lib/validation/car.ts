@@ -11,6 +11,11 @@ export const carInputSchema = z.object({
   plate: z.string().trim().min(1, "Plate is required").max(20),
   color: optionalText(50),
   mileage: z.coerce.number("Enter a valid mileage").int().nonnegative().default(0),
+  serviceIntervalMiles: z.coerce
+    .number("Enter a valid interval")
+    .int()
+    .positive()
+    .default(5000),
   status: z.enum(CAR_STATUSES).default("available"),
   notes: optionalText(),
 });
@@ -26,6 +31,7 @@ export const CAR_FIELD_LABELS: Record<keyof CarInput, string> = {
   plate: "Plate",
   color: "Color",
   mileage: "Mileage",
+  serviceIntervalMiles: "Service interval (miles)",
   status: "Status",
   notes: "Notes",
 };

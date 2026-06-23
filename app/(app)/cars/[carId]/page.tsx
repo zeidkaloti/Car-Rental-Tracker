@@ -15,8 +15,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DeleteConfirmButton } from "@/components/forms/delete-confirm-button";
+import { ServiceStatusBadge } from "@/components/service/service-status-badge";
+import { getServiceStatus } from "@/lib/service-status";
 import { ServiceHistorySection } from "@/components/cars/service-history-section";
-import { SafetyCertificationsSection } from "@/components/cars/safety-certifications-section";
+import { RegistrationsSection } from "@/components/cars/registrations-section";
+import { InsuranceSection } from "@/components/cars/insurance-section";
 import { DocumentsSection } from "@/components/documents/documents-section";
 import { deleteCar } from "@/actions/cars";
 
@@ -32,7 +35,8 @@ export default async function CarDetailPage({
       with: {
         rentals: { with: { renter: true } },
         serviceRecords: { orderBy: (t, { desc }) => [desc(t.serviceDate)] },
-        safetyCertifications: { orderBy: (t, { desc }) => [desc(t.certDate)] },
+        registrations: { orderBy: (t, { desc }) => [desc(t.registrationDate)] },
+        insurancePolicies: { orderBy: (t, { desc }) => [desc(t.startDate)] },
       },
     }),
     db.query.documents.findMany({
@@ -44,6 +48,12 @@ export default async function CarDetailPage({
     notFound();
   }
 
+  const serviceStatus = getServiceStatus(
+    car.mileage,
+    car.serviceIntervalMiles,
+    car.serviceRecords[0],
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -52,6 +62,7 @@ export default async function CarDetailPage({
             {car.year} {car.make} {car.model}
           </h1>
           <CarStatusBadge status={car.status} />
+          <ServiceStatusBadge status={serviceStatus} />
         </div>
         <div className="flex gap-2">
           <Button variant="outline" render={<Link href={`/cars/${car.id}/edit`} />}>
@@ -82,6 +93,10 @@ export default async function CarDetailPage({
         <div>
           <div className="text-muted-foreground">Mileage</div>
           <div>{car.mileage.toLocaleString()}</div>
+        </div>
+        <div>
+          <div className="text-muted-foreground">Service interval</div>
+          <div>{car.serviceIntervalMiles.toLocaleString()} mi</div>
         </div>
       </div>
 
@@ -127,7 +142,8 @@ export default async function CarDetailPage({
       </div>
 
       <ServiceHistorySection carId={car.id} records={car.serviceRecords} />
-      <SafetyCertificationsSection carId={car.id} certifications={car.safetyCertifications} />
+      <RegistrationsSection carId={car.id} registrations={car.registrations} />
+      <InsuranceSection carId={car.id} policies={car.insurancePolicies} />
       <DocumentsSection entityType="car" entityId={car.id} documents={carDocuments} />
     </div>
   );

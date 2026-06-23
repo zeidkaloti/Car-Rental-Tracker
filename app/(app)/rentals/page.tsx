@@ -2,6 +2,7 @@ import Link from "next/link";
 import { desc } from "drizzle-orm";
 import { db } from "@/db";
 import { rentals } from "@/db/schema";
+import { SERVICE_TYPE_LABELS } from "@/lib/validation/rental";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -39,6 +40,7 @@ export default async function RentalsPage() {
               <TableHead>Car</TableHead>
               <TableHead>Cadence</TableHead>
               <TableHead>Rate</TableHead>
+              <TableHead>Use</TableHead>
               <TableHead>Start</TableHead>
               <TableHead>End</TableHead>
               <TableHead>Status</TableHead>
@@ -57,6 +59,7 @@ export default async function RentalsPage() {
                 </TableCell>
                 <TableCell className="capitalize">{rental.billingCadence}</TableCell>
                 <TableCell>${rental.rateAmount}</TableCell>
+                <TableCell>{SERVICE_TYPE_LABELS[rental.serviceType]}</TableCell>
                 <TableCell>{rental.startDate}</TableCell>
                 <TableCell>{rental.endDate ?? "—"}</TableCell>
                 <TableCell>

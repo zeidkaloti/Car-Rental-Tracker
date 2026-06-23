@@ -9,6 +9,8 @@ import {
   Upload,
   Users,
   CalendarRange,
+  Wrench,
+  BarChart3,
 } from "lucide-react";
 import {
   Sidebar,
@@ -26,8 +28,10 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/renters", label: "Renters", icon: Users },
   { href: "/cars", label: "Cars", icon: Car },
+  { href: "/service", label: "Service", icon: Wrench },
   { href: "/rentals", label: "Rentals", icon: CalendarRange },
   { href: "/charges", label: "Tickets & tolls", icon: Receipt },
+  { href: "/analytics", label: "Insights", icon: BarChart3 },
   { href: "/import", label: "Import data", icon: Upload },
 ];
 

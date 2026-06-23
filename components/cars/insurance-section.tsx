@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -20,29 +19,29 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SafetyCertificationForm } from "@/components/forms/safety-certification-form";
-import { deleteSafetyCertification } from "@/actions/safety-certifications";
+import { InsuranceForm } from "@/components/forms/insurance-form";
+import { deleteInsurancePolicy } from "@/actions/insurance";
 
-type SafetyCertification = {
+type InsurancePolicy = {
   id: string;
-  certDate: string;
+  startDate: string;
   expiryDate: string;
-  inspector: string | null;
-  result: "pass" | "fail";
+  provider: string | null;
+  policyNumber: string | null;
 };
 
-export function SafetyCertificationsSection({
+export function InsuranceSection({
   carId,
-  certifications,
+  policies,
 }: {
   carId: string;
-  certifications: SafetyCertification[];
+  policies: InsurancePolicy[];
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  async function handleDelete(certId: string) {
-    const result = await deleteSafetyCertification(certId);
+  async function handleDelete(policyId: string) {
+    const result = await deleteInsurancePolicy(policyId);
     if (!result.success) {
       toast.error(result.error ?? "Could not delete.");
       return;
@@ -53,16 +52,16 @@ export function SafetyCertificationsSection({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-foreground">Safety certifications</h2>
+        <h2 className="text-sm font-semibold text-foreground">Insurance</h2>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button variant="outline" size="sm" />}>
-            Add certification
+            Add insurance
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Add safety certification</DialogTitle>
+              <DialogTitle>Add insurance policy</DialogTitle>
             </DialogHeader>
-            <SafetyCertificationForm
+            <InsuranceForm
               carId={carId}
               onSuccess={() => {
                 setOpen(false);
@@ -72,32 +71,28 @@ export function SafetyCertificationsSection({
           </DialogContent>
         </Dialog>
       </div>
-      {certifications.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No certifications on file.</p>
+      {policies.length === 0 ? (
+        <p className="text-sm text-muted-foreground">No insurance on file.</p>
       ) : (
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Cert date</TableHead>
+              <TableHead>Start date</TableHead>
               <TableHead>Expiry</TableHead>
-              <TableHead>Inspector</TableHead>
-              <TableHead>Result</TableHead>
+              <TableHead>Provider</TableHead>
+              <TableHead>Policy #</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
-            {certifications.map((cert) => (
-              <TableRow key={cert.id}>
-                <TableCell>{cert.certDate}</TableCell>
-                <TableCell>{cert.expiryDate}</TableCell>
-                <TableCell>{cert.inspector ?? "—"}</TableCell>
+            {policies.map((policy) => (
+              <TableRow key={policy.id}>
+                <TableCell>{policy.startDate}</TableCell>
+                <TableCell>{policy.expiryDate}</TableCell>
+                <TableCell>{policy.provider ?? "—"}</TableCell>
+                <TableCell>{policy.policyNumber ?? "—"}</TableCell>
                 <TableCell>
-                  <Badge variant={cert.result === "pass" ? "default" : "destructive"}>
-                    {cert.result}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="ghost" size="sm" onClick={() => handleDelete(cert.id)}>
+                  <Button variant="ghost" size="sm" onClick={() => handleDelete(policy.id)}>
                     Delete
                   </Button>
                 </TableCell>
