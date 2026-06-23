@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { verifySession } from "@/lib/dal";
 import { SignOutButton } from "@/components/nav/sign-out-button";
 import { AppSidebar } from "@/components/nav/app-sidebar";
@@ -22,6 +23,9 @@ export default async function AppLayout({
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground">{session.user.email}</span>
+            <Link href="/profile" className="text-sm font-medium text-zinc-500 hover:text-foreground">
+              Edit profile
+            </Link>
             <SignOutButton />
           </div>
         </header>
