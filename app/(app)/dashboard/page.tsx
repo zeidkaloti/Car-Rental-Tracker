@@ -4,6 +4,14 @@ import { db } from "@/db";
 import { rentals, safetyCertifications, charges } from "@/db/schema";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const CERT_LOOKAHEAD_DAYS = 30;
 
@@ -14,6 +22,7 @@ export default async function DashboardPage() {
     [unpaidCharges],
     expiringCertList,
     unpaidChargeList,
+    activeRentalList,
   ] = await Promise.all([
     db.select({ count: count() }).from(rentals).where(eq(rentals.status, "active")),
     db
@@ -35,6 +44,11 @@ export default async function DashboardPage() {
       with: { renter: true },
       orderBy: [desc(charges.chargeDate)],
       limit: 5,
+    }),
+    db.query.rentals.findMany({
+      where: eq(rentals.status, "active"),
+      with: { renter: true, car: true },
+      orderBy: [desc(rentals.startDate)],
     }),
   ]);
 
@@ -109,6 +123,42 @@ export default async function DashboardPage() {
             </ul>
           )}
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <h2 className="text-sm font-semibold text-foreground">Active rentals</h2>
+        {activeRentalList.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No active rentals.</p>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Renter</TableHead>
+                <TableHead>Car</TableHead>
+                <TableHead>Start date</TableHead>
+                <TableHead>End date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {activeRentalList.map((rental) => (
+                <TableRow key={rental.id}>
+                  <TableCell>
+                    <Link href={`/renters/${rental.renter.id}`} className="hover:underline">
+                      {rental.renter.firstName} {rental.renter.lastName}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href={`/cars/${rental.car.id}`} className="hover:underline">
+                      {rental.car.make} {rental.car.model} ({rental.car.plate})
+                    </Link>
+                  </TableCell>
+                  <TableCell>{rental.startDate}</TableCell>
+                  <TableCell>{rental.endDate ?? "—"}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </div>
     </div>
   );

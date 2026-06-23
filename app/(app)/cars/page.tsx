@@ -32,7 +32,10 @@ export default async function CarsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Vehicle</TableHead>
+              <TableHead>Make</TableHead>
+              <TableHead>Model</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Color</TableHead>
               <TableHead>Plate</TableHead>
               <TableHead>VIN</TableHead>
               <TableHead>Mileage</TableHead>
@@ -44,9 +47,12 @@ export default async function CarsPage() {
               <TableRow key={car.id}>
                 <TableCell>
                   <Link href={`/cars/${car.id}`} className="font-medium hover:underline">
-                    {car.year} {car.make} {car.model}
+                    {car.make}
                   </Link>
                 </TableCell>
+                <TableCell>{car.model}</TableCell>
+                <TableCell>{car.year}</TableCell>
+                <TableCell>{car.color ?? "—"}</TableCell>
                 <TableCell>{car.plate}</TableCell>
                 <TableCell>{car.vin}</TableCell>
                 <TableCell>{car.mileage.toLocaleString()}</TableCell>
