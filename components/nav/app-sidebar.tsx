@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Car,
@@ -40,7 +41,8 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="px-3 py-3">
+      <SidebarHeader className="flex-row items-center gap-2 px-3 py-3">
+        <Image src="/car-logo.png" alt="" width={20} height={20} className="shrink-0" />
         <span className="text-sm font-semibold text-foreground">
           Car Rental Tracker
         </span>
