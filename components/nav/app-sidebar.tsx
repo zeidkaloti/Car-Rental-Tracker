@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Car,
+  Home,
   LayoutDashboard,
   Receipt,
   Upload,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const navItems = [
+  { href: "/home", label: "Home", icon: Home },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/renters", label: "Renters", icon: Users },
   { href: "/cars", label: "Cars", icon: Car },

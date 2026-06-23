@@ -22,5 +22,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.png).*)"],
+  // _next/image does an internal self-fetch of local image sources (e.g.
+  // car-logo.png) with no cookies attached, so public asset files must be
+  // excluded here too or that fetch gets redirected to /login.
+  matcher: ["/((?!_next/static|_next/image|.*\\.(?:png|jpg|jpeg|svg|gif|webp|ico)$).*)"],
 };
