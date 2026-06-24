@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { matchesSearch } from "@/lib/search"
 import type { CAR_STATUSES } from "@/lib/validation/car"
 
 type Car = {
@@ -30,12 +31,8 @@ export function CarsTable({ cars }: { cars: Car[] }) {
   const [query, setQuery] = useState("")
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return cars
     return cars.filter((car) =>
-      [car.make, car.model, String(car.year), car.color, car.plate, car.vin, car.status]
-        .filter(Boolean)
-        .some((field) => field!.toLowerCase().includes(q)),
+      matchesSearch(query, [car.make, car.model, String(car.year), car.color, car.plate, car.vin, car.status]),
     )
   }, [cars, query])
 

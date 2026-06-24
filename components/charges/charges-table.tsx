@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { ChargeRowActions } from "@/components/charges/charge-row-actions"
+import { matchesSearch } from "@/lib/search"
 
 type Charge = {
   id: string
@@ -29,10 +30,8 @@ export function ChargesTable({ charges }: { charges: Charge[] }) {
   const [query, setQuery] = useState("")
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return charges
     return charges.filter((charge) =>
-      [
+      matchesSearch(query, [
         charge.renter.firstName,
         charge.renter.lastName,
         charge.car.make,
@@ -40,7 +39,7 @@ export function ChargesTable({ charges }: { charges: Charge[] }) {
         charge.car.plate,
         charge.type,
         charge.status,
-      ].some((field) => field.toLowerCase().includes(q)),
+      ]),
     )
   }, [charges, query])
 

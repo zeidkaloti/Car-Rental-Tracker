@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { matchesSearch } from "@/lib/search"
 
 type Renter = {
   id: string
@@ -25,12 +26,8 @@ export function RentersTable({ renters }: { renters: Renter[] }) {
   const [query, setQuery] = useState("")
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return renters
     return renters.filter((renter) =>
-      [renter.firstName, renter.lastName, renter.email, renter.phone]
-        .filter(Boolean)
-        .some((field) => field!.toLowerCase().includes(q)),
+      matchesSearch(query, [renter.firstName, renter.lastName, renter.email, renter.phone]),
     )
   }, [renters, query])
 

@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { matchesSearch } from "@/lib/search"
 import type { ServiceStatus } from "@/lib/service-status"
 
 type ServiceRow = {
@@ -27,12 +28,13 @@ export function ServiceTable({ cars }: { cars: ServiceRow[] }) {
   const [query, setQuery] = useState("")
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return cars
     return cars.filter((car) =>
-      [car.make, car.model, car.plate, car.status.due ? "due for service" : "up to date"].some(
-        (field) => field.toLowerCase().includes(q),
-      ),
+      matchesSearch(query, [
+        car.make,
+        car.model,
+        car.plate,
+        car.status.due ? "due for service" : "up to date",
+      ]),
     )
   }, [cars, query])
 

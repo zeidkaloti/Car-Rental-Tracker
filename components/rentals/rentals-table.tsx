@@ -13,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { matchesSearch } from "@/lib/search"
 import { SERVICE_TYPE_LABELS } from "@/lib/validation/rental"
 
 type Rental = {
@@ -31,10 +32,8 @@ export function RentalsTable({ rentals }: { rentals: Rental[] }) {
   const [query, setQuery] = useState("")
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return rentals
     return rentals.filter((rental) =>
-      [
+      matchesSearch(query, [
         rental.renter.firstName,
         rental.renter.lastName,
         rental.car.make,
@@ -42,7 +41,7 @@ export function RentalsTable({ rentals }: { rentals: Rental[] }) {
         rental.car.plate,
         rental.billingCadence,
         rental.status,
-      ].some((field) => field.toLowerCase().includes(q)),
+      ]),
     )
   }, [rentals, query])
 
