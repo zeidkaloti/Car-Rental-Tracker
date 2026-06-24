@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { count, eq, desc, sql, and, isNotNull } from "drizzle-orm";
+import { count, eq, desc, sql, and, isNotNull, gte } from "drizzle-orm";
 import { db } from "@/db";
 import { cars, rentals, charges, renters } from "@/db/schema";
 import { SERVICE_TYPE_LABELS } from "@/lib/validation/rental";
@@ -51,7 +51,13 @@ export default async function AnalyticsPage() {
         avgDays: sql<string>`coalesce(avg(${rentals.endDate}::date - ${rentals.startDate}::date), 0)`,
       })
       .from(rentals)
-      .where(and(eq(rentals.status, "completed"), isNotNull(rentals.endDate))),
+      .where(
+        and(
+          eq(rentals.status, "completed"),
+          isNotNull(rentals.endDate),
+          gte(rentals.endDate, rentals.startDate),
+        ),
+      ),
     db
       .select({
         renterId: charges.renterId,

@@ -13,17 +13,27 @@ export const RENTAL_SERVICE_TYPES = [
   "other",
 ] as const;
 
-export const rentalInputSchema = z.object({
-  renterId: z.string().min(1, "Renter is required"),
-  carId: z.string().min(1, "Car is required"),
-  startDate: z.iso.date("Enter a valid start date"),
-  endDate: optionalDate(),
-  billingCadence: z.enum(BILLING_CADENCES),
-  rateAmount: money("Enter a valid rate"),
-  serviceType: z.enum(RENTAL_SERVICE_TYPES).default("other"),
-  status: z.enum(RENTAL_STATUSES).default("active"),
-  notes: optionalText(),
-});
+export const rentalInputSchema = z
+  .object({
+    renterId: z.string().min(1, "Renter is required"),
+    carId: z.string().min(1, "Car is required"),
+    startDate: z.iso.date("Enter a valid start date"),
+    endDate: optionalDate(),
+    billingCadence: z.enum(BILLING_CADENCES),
+    rateAmount: money("Enter a valid rate"),
+    serviceType: z.enum(RENTAL_SERVICE_TYPES).default("other"),
+    status: z.enum(RENTAL_STATUSES).default("active"),
+    notes: optionalText(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.endDate && data.endDate < data.startDate) {
+      ctx.addIssue({
+        code: "custom",
+        message: "End date can't be before the start date",
+        path: ["endDate"],
+      });
+    }
+  });
 
 export type RentalInput = z.output<typeof rentalInputSchema>;
 export type RentalFormInput = z.input<typeof rentalInputSchema>;
