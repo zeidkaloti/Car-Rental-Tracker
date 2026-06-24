@@ -51,7 +51,7 @@ export default async function CarDetailPage({
 
   const serviceStatus = getServiceStatus(
     car.mileage,
-    car.serviceIntervalMiles,
+    car.serviceIntervalKm,
     car.serviceRecords[0],
   );
 
@@ -98,7 +98,7 @@ export default async function CarDetailPage({
         </div>
         <div>
           <div className="text-muted-foreground">Service interval</div>
-          <div>{car.serviceIntervalMiles.toLocaleString()} mi</div>
+          <div>{car.serviceIntervalKm.toLocaleString()} km</div>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ export default async function ServicePage() {
     model: car.model,
     plate: car.plate,
     mileage: car.mileage,
-    status: getServiceStatus(car.mileage, car.serviceIntervalMiles, car.serviceRecords[0]),
+    status: getServiceStatus(car.mileage, car.serviceIntervalKm, car.serviceRecords[0]),
   }));
 
   return (

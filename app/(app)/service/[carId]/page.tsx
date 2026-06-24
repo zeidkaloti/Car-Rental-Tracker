@@ -25,7 +25,7 @@ export default async function CarServicePage({
     notFound();
   }
 
-  const status = getServiceStatus(car.mileage, car.serviceIntervalMiles, car.serviceRecords[0]);
+  const status = getServiceStatus(car.mileage, car.serviceIntervalKm, car.serviceRecords[0]);
 
   return (
     <div className="space-y-6">
@@ -40,25 +40,25 @@ export default async function CarServicePage({
       <div className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
         <div>
           <div className="text-muted-foreground">Current mileage</div>
-          <div>{car.mileage.toLocaleString()} mi</div>
+          <div>{car.mileage.toLocaleString()} km</div>
         </div>
         <div>
           <div className="text-muted-foreground">Service interval</div>
-          <div>{car.serviceIntervalMiles.toLocaleString()} mi</div>
+          <div>{car.serviceIntervalKm.toLocaleString()} km</div>
         </div>
         <div>
           <div className="text-muted-foreground">Last service</div>
           <div>
             {status.lastServiceDate
               ? status.lastServiceMileage != null
-                ? `${status.lastServiceDate} (${status.lastServiceMileage.toLocaleString()} mi)`
+                ? `${status.lastServiceDate} (${status.lastServiceMileage.toLocaleString()} km)`
                 : status.lastServiceDate
               : "Never"}
           </div>
         </div>
         <div>
-          <div className="text-muted-foreground">Miles since service</div>
-          <div>{status.milesSinceService.toLocaleString()} mi</div>
+          <div className="text-muted-foreground">Km since service</div>
+          <div>{status.kmSinceService.toLocaleString()} km</div>
         </div>
       </div>
 

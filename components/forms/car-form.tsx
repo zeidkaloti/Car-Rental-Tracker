@@ -48,7 +48,7 @@ export function CarForm({
       plate: "",
       color: "",
       mileage: 0,
-      serviceIntervalMiles: 5000,
+      serviceIntervalKm: 8000,
       status: "available",
       notes: "",
       ...defaultValues,
@@ -111,13 +111,13 @@ export function CarForm({
             <FieldError errors={[form.formState.errors.mileage]} />
           </Field>
           <Field>
-            <FieldLabel htmlFor="serviceIntervalMiles">Service interval (mi)</FieldLabel>
+            <FieldLabel htmlFor="serviceIntervalKm">Service interval (km)</FieldLabel>
             <Input
-              id="serviceIntervalMiles"
+              id="serviceIntervalKm"
               type="number"
-              {...form.register("serviceIntervalMiles")}
+              {...form.register("serviceIntervalKm")}
             />
-            <FieldError errors={[form.formState.errors.serviceIntervalMiles]} />
+            <FieldError errors={[form.formState.errors.serviceIntervalKm]} />
           </Field>
         </div>
         <Field>

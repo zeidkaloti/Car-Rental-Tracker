@@ -57,7 +57,7 @@ export function ServiceTable({ cars }: { cars: ServiceRow[] }) {
               <TableHead>Car</TableHead>
               <TableHead>Current mileage</TableHead>
               <TableHead>Last service</TableHead>
-              <TableHead>Miles since service</TableHead>
+              <TableHead>Km since service</TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
@@ -67,15 +67,15 @@ export function ServiceTable({ cars }: { cars: ServiceRow[] }) {
                 <TableCell className="font-medium">
                   {car.make} {car.model} ({car.plate})
                 </TableCell>
-                <TableCell>{car.mileage.toLocaleString()} mi</TableCell>
+                <TableCell>{car.mileage.toLocaleString()} km</TableCell>
                 <TableCell>
                   {car.status.lastServiceDate
                     ? car.status.lastServiceMileage != null
-                      ? `${car.status.lastServiceDate} (${car.status.lastServiceMileage.toLocaleString()} mi)`
+                      ? `${car.status.lastServiceDate} (${car.status.lastServiceMileage.toLocaleString()} km)`
                       : car.status.lastServiceDate
                     : "Never"}
                 </TableCell>
-                <TableCell>{car.status.milesSinceService.toLocaleString()} mi</TableCell>
+                <TableCell>{car.status.kmSinceService.toLocaleString()} km</TableCell>
                 <TableCell>
                   <ServiceStatusBadge status={car.status} />
                 </TableCell>

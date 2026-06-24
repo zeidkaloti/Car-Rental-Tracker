@@ -1,24 +1,24 @@
 export type ServiceStatus = {
   lastServiceMileage: number | null;
   lastServiceDate: string | null;
-  milesSinceService: number;
+  kmSinceService: number;
   due: boolean;
 };
 
-// No service record yet is treated as "0 miles since the car's last (nonexistent)
+// No service record yet is treated as "0 km since the car's last (nonexistent)
 // service" — i.e. due as soon as current mileage reaches the interval on its own.
 export function getServiceStatus(
   currentMileage: number,
-  intervalMiles: number,
+  intervalKm: number,
   lastService: { odometerReading: number | null; serviceDate: string } | undefined,
 ): ServiceStatus {
   const lastServiceMileage = lastService?.odometerReading ?? null;
-  const milesSinceService = currentMileage - (lastServiceMileage ?? 0);
+  const kmSinceService = currentMileage - (lastServiceMileage ?? 0);
 
   return {
     lastServiceMileage,
     lastServiceDate: lastService?.serviceDate ?? null,
-    milesSinceService,
-    due: milesSinceService >= intervalMiles,
+    kmSinceService,
+    due: kmSinceService >= intervalKm,
   };
 }

@@ -16,7 +16,7 @@ export const cars = pgTable("cars", {
   plate: text("plate").notNull(),
   color: text("color"),
   mileage: integer("mileage").notNull().default(0),
-  serviceIntervalMiles: integer("service_interval_miles").notNull().default(5000),
+  serviceIntervalKm: integer("service_interval_km").notNull().default(8000),
   status: carStatusEnum("status").notNull().default("available"),
   notes: text("notes"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

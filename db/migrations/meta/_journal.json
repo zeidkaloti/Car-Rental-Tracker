@@ -29,6 +29,13 @@
       "when": 1782177183899,
       "tag": "0003_add_service_type_and_insurance",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1782359072000,
+      "tag": "0004_rename_service_interval_to_km",
+      "breakpoints": true
     }
   ]
 }
