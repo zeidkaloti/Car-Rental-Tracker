@@ -86,7 +86,14 @@ export function ChargeForm({
               control={form.control}
               name="renterId"
               render={({ field }) => (
-                <Select value={field.value} onValueChange={(value) => field.onChange(value)}>
+                <Select
+                  value={field.value}
+                  onValueChange={(value) => field.onChange(value)}
+                  items={renters.map((renter) => ({
+                    value: renter.id,
+                    label: `${renter.firstName} ${renter.lastName}`,
+                  }))}
+                >
                   <SelectTrigger id="renterId" className="w-full">
                     <SelectValue placeholder="Select a renter" />
                   </SelectTrigger>
@@ -108,7 +115,14 @@ export function ChargeForm({
               control={form.control}
               name="carId"
               render={({ field }) => (
-                <Select value={field.value} onValueChange={(value) => field.onChange(value)}>
+                <Select
+                  value={field.value}
+                  onValueChange={(value) => field.onChange(value)}
+                  items={cars.map((car) => ({
+                    value: car.id,
+                    label: `${car.make} ${car.model} (${car.plate})`,
+                  }))}
+                >
                   <SelectTrigger id="carId" className="w-full">
                     <SelectValue placeholder="Select a car" />
                   </SelectTrigger>
@@ -134,6 +148,10 @@ export function ChargeForm({
               <Select
                 value={field.value ?? "__none"}
                 onValueChange={(value) => field.onChange(value === "__none" ? undefined : value)}
+                items={[
+                  { value: "__none", label: "Not linked" },
+                  ...rentals.map((rental) => ({ value: rental.id, label: rental.startDate })),
+                ]}
               >
                 <SelectTrigger id="rentalId" className="w-full">
                   <SelectValue placeholder="Not linked to a specific rental" />
