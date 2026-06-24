@@ -3,14 +3,7 @@ import { desc } from "drizzle-orm";
 import { db } from "@/db";
 import { renters } from "@/db/schema";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { RentersTable } from "@/components/renters/renters-table";
 
 export default async function RentersPage() {
   const allRenters = await db.query.renters.findMany({
@@ -30,30 +23,7 @@ export default async function RentersPage() {
       {allRenters.length === 0 ? (
         <p className="text-sm text-muted-foreground">No renters yet.</p>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Phone</TableHead>
-              <TableHead>License expiry</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allRenters.map((renter) => (
-              <TableRow key={renter.id} className="cursor-pointer">
-                <TableCell>
-                  <Link href={`/renters/${renter.id}`} className="font-medium hover:underline">
-                    {renter.firstName} {renter.lastName}
-                  </Link>
-                </TableCell>
-                <TableCell>{renter.email ?? "—"}</TableCell>
-                <TableCell>{renter.phone ?? "—"}</TableCell>
-                <TableCell>{renter.licenseExpiry ?? "—"}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <RentersTable renters={allRenters} />
       )}
     </div>
   );

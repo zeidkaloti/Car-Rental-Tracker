@@ -2,17 +2,8 @@ import Link from "next/link";
 import { desc } from "drizzle-orm";
 import { db } from "@/db";
 import { rentals } from "@/db/schema";
-import { SERVICE_TYPE_LABELS } from "@/lib/validation/rental";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { RentalsTable } from "@/components/rentals/rentals-table";
 
 export default async function RentalsPage() {
   const allRentals = await db.query.rentals.findMany({
@@ -33,44 +24,7 @@ export default async function RentalsPage() {
       {allRentals.length === 0 ? (
         <p className="text-sm text-muted-foreground">No rentals yet.</p>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Renter</TableHead>
-              <TableHead>Car</TableHead>
-              <TableHead>Cadence</TableHead>
-              <TableHead>Rate</TableHead>
-              <TableHead>Use</TableHead>
-              <TableHead>Start</TableHead>
-              <TableHead>End</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {allRentals.map((rental) => (
-              <TableRow key={rental.id}>
-                <TableCell>
-                  <Link href={`/rentals/${rental.id}`} className="font-medium hover:underline">
-                    {rental.renter.firstName} {rental.renter.lastName}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {rental.car.make} {rental.car.model} ({rental.car.plate})
-                </TableCell>
-                <TableCell className="capitalize">{rental.billingCadence}</TableCell>
-                <TableCell>${rental.rateAmount}</TableCell>
-                <TableCell>{SERVICE_TYPE_LABELS[rental.serviceType]}</TableCell>
-                <TableCell>{rental.startDate}</TableCell>
-                <TableCell>{rental.endDate ?? "—"}</TableCell>
-                <TableCell>
-                  <Badge variant={rental.status === "active" ? "default" : "outline"}>
-                    {rental.status}
-                  </Badge>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <RentalsTable rentals={allRentals} />
       )}
     </div>
   );
