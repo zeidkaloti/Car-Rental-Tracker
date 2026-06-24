@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/table";
 import { DeleteConfirmButton } from "@/components/forms/delete-confirm-button";
 import { DocumentsSection } from "@/components/documents/documents-section";
+import { BackButton } from "@/components/ui/back-button";
 import { deleteRenter } from "@/actions/renters";
 
 export default async function RenterDetailPage({
@@ -39,6 +40,7 @@ export default async function RenterDetailPage({
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-foreground">

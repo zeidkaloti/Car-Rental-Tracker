@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { cars } from "@/db/schema";
 import { CarForm } from "@/components/forms/car-form";
+import { BackButton } from "@/components/ui/back-button";
 
 export default async function EditCarPage({
   params,
@@ -18,6 +19,7 @@ export default async function EditCarPage({
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <h1 className="text-lg font-semibold text-foreground">
         Edit {car.year} {car.make} {car.model}
       </h1>

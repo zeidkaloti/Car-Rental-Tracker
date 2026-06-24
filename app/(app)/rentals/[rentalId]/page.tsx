@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DeleteConfirmButton } from "@/components/forms/delete-confirm-button";
 import { DocumentsSection } from "@/components/documents/documents-section";
+import { BackButton } from "@/components/ui/back-button";
 import { deleteRental } from "@/actions/rentals";
 
 export default async function RentalDetailPage({
@@ -32,6 +33,7 @@ export default async function RentalDetailPage({
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h1 className="text-lg font-semibold text-foreground">

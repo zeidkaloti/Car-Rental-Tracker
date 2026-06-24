@@ -21,6 +21,7 @@ import { ServiceHistorySection } from "@/components/cars/service-history-section
 import { RegistrationsSection } from "@/components/cars/registrations-section";
 import { InsuranceSection } from "@/components/cars/insurance-section";
 import { DocumentsSection } from "@/components/documents/documents-section";
+import { BackButton } from "@/components/ui/back-button";
 import { deleteCar } from "@/actions/cars";
 
 export default async function CarDetailPage({
@@ -56,6 +57,7 @@ export default async function CarDetailPage({
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h1 className="text-lg font-semibold text-foreground">

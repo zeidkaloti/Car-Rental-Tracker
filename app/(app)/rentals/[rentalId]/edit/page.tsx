@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { rentals } from "@/db/schema";
 import { RentalForm } from "@/components/forms/rental-form";
+import { BackButton } from "@/components/ui/back-button";
 
 export default async function EditRentalPage({
   params,
@@ -24,6 +25,7 @@ export default async function EditRentalPage({
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <h1 className="text-lg font-semibold text-foreground">Edit rental</h1>
       <RentalForm
         rentalId={rental.id}

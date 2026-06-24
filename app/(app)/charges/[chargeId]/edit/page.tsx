@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { charges } from "@/db/schema";
 import { ChargeForm } from "@/components/forms/charge-form";
+import { BackButton } from "@/components/ui/back-button";
 
 export default async function EditChargePage({
   params,
@@ -25,6 +26,7 @@ export default async function EditChargePage({
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <h1 className="text-lg font-semibold text-foreground">Edit charge</h1>
       <ChargeForm
         chargeId={charge.id}

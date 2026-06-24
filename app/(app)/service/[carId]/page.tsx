@@ -6,6 +6,7 @@ import { cars } from "@/db/schema";
 import { getServiceStatus } from "@/lib/service-status";
 import { ServiceStatusBadge } from "@/components/service/service-status-badge";
 import { ServiceHistorySection } from "@/components/cars/service-history-section";
+import { BackButton } from "@/components/ui/back-button";
 
 export default async function CarServicePage({
   params,
@@ -28,6 +29,7 @@ export default async function CarServicePage({
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <div className="flex items-center gap-3">
         <h1 className="text-lg font-semibold text-foreground">
           {car.year} {car.make} {car.model} ({car.plate})

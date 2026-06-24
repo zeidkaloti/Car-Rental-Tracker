@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { ChargeForm } from "@/components/forms/charge-form";
+import { BackButton } from "@/components/ui/back-button";
 
 export default async function NewChargePage() {
   const [renters, cars, rentals] = await Promise.all([
@@ -12,6 +13,7 @@ export default async function NewChargePage() {
 
   return (
     <div className="space-y-6">
+      <BackButton />
       <h1 className="text-lg font-semibold text-foreground">Add charge</h1>
       <ChargeForm renters={renters} cars={cars} rentals={rentals} />
     </div>
