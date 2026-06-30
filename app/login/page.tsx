@@ -76,12 +76,6 @@ export default function LoginPage() {
             {pending ? "Signing in..." : "Sign in"}
           </button>
         </form>
-        <p className="text-sm text-zinc-500">
-          New staff member?{" "}
-          <Link href="/signup" className="font-medium text-foreground underline">
-            Create an account
-          </Link>
-        </p>
       </div>
     </div>
   );

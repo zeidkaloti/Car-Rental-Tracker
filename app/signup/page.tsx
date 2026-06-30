@@ -2,7 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignupPage() {
@@ -89,12 +88,6 @@ export default function SignupPage() {
             {pending ? "Creating account..." : "Create account"}
           </button>
         </form>
-        <p className="text-sm text-zinc-500">
-          Already have an account?{" "}
-          <Link href="/login" className="font-medium text-foreground underline">
-            Sign in
-          </Link>
-        </p>
       </div>
     </div>
   );

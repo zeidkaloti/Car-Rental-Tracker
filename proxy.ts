@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-const PUBLIC_PATHS = ["/login", "/signup", "/forgot-password", "/reset-password", "/api/auth"];
+const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/api/auth"];
 
 // Fast, optimistic cookie-presence check only — no DB hit here. The real
 // session verification happens in lib/dal.ts's verifySession(), called by
