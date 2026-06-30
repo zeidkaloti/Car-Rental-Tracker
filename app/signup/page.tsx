@@ -26,7 +26,7 @@ export default function SignupPage() {
       setError(signUpError.message ?? "Could not create account.");
       return;
     }
-    router.push("/dashboard");
+    router.push("/home");
   }
 
   return (

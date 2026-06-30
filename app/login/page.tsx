@@ -27,7 +27,7 @@ export default function LoginPage() {
       setError(signInError.message ?? "Could not sign in.");
       return;
     }
-    router.push("/dashboard");
+    router.push("/home");
   }
 
   return (

@@ -1,18 +1,24 @@
 import { renterInputSchema, RENTER_FIELD_LABELS } from "@/lib/validation/renter";
 import { carInputSchema, CAR_FIELD_LABELS } from "@/lib/validation/car";
+import { rentalImportSchema, RENTAL_IMPORT_FIELD_LABELS } from "@/lib/validation/rental-import";
 
 // Registry-driven so the importer's upload/mapping/preview/commit UI never
 // needs to change shape when a new entity type is added — only this map.
 export const IMPORTABLE_ENTITIES = {
   renters: {
-    label: "Renters",
+    label: "Renters only",
     schema: renterInputSchema,
     fieldLabels: RENTER_FIELD_LABELS as Record<string, string>,
   },
   cars: {
-    label: "Cars",
+    label: "Cars only",
     schema: carInputSchema,
     fieldLabels: CAR_FIELD_LABELS as Record<string, string>,
+  },
+  rentals: {
+    label: "Rentals (renter + car + rental combined)",
+    schema: rentalImportSchema,
+    fieldLabels: RENTAL_IMPORT_FIELD_LABELS as Record<string, string>,
   },
 } as const;
 
