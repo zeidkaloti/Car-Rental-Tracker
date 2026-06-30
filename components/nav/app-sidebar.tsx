@@ -46,7 +46,7 @@ export function AppSidebar() {
       <SidebarHeader className="flex-row items-center gap-2 px-3 py-3">
         <Image src="/car-logo.png" alt="" width={20} height={20} className="shrink-0" />
         <span className="text-sm font-semibold text-foreground">
-          Car Rental Tracker
+          Skyline Auto
         </span>
       </SidebarHeader>
       <SidebarContent>

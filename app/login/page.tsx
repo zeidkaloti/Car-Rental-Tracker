@@ -35,7 +35,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-6">
         <div className="space-y-1">
           <h1 className="text-xl font-semibold text-foreground">Sign in</h1>
-          <p className="text-sm text-zinc-500">Car Rental Tracker staff access</p>
+          <p className="text-sm text-zinc-500">Skyline Auto staff access</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
